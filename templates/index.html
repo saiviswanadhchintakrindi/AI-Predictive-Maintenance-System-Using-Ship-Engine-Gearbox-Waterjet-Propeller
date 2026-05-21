@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Predictive Maintenance | Ship Engine</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Background Ambient Orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='white_ship_logo.png') }}" class="logo" alt="Ship Logo">
+            <h1>AI Based Predictive Maintenance System</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#about" class="nav-link">About</a>
+            <div class="equipment-toggle">
+                <button class="toggle-btn active" id="btnEngine" onclick="setEquipment('engine')">Engine</button>
+                <button class="toggle-btn" id="btnGearbox" onclick="setEquipment('gearbox')">Gearbox</button>
+                <button class="toggle-btn" id="btnWaterjet" onclick="setEquipment('waterjet')">Waterjet</button>
+            </div>
+            <a href="#dashboard" class="nav-link active">Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="about-section glass-panel fade-in">
+    <div class="about-content">
+        <h2>System Overview</h2>
+
+        <p>
+            This AI-based Predictive Maintenance System monitors and analyzes ship machinery performance using advanced
+            machine learning and data analytics techniques. It processes real-time and simulated sensor data to detect
+            anomalies, generate health scores, predict potential failures, and identify root causes in advance.
+        </p>
+
+        <h3>Engine Module</h3>
+        <p>
+            The engine module continuously monitors parameters such as engine speed (RPM), temperature, pressure, and load
+            conditions. It detects issues like overheating, abnormal combustion, and performance degradation, enabling early
+            fault prediction and efficient engine operation.
+        </p>
+
+        <h3>Gearbox Module</h3>
+        <p>
+            The gearbox module analyzes input shaft speed, output shaft speed, torque, vibration, temperature, and gear ratio.
+            It helps detect faults such as gear wear, bearing failure, misalignment, lubrication issues, and overheating.
+            Machine learning models are used to identify inefficiencies and predict failures based on variations in mechanical behavior.
+        </p>
+
+        <h3>Waterjet Propeller Module</h3>
+        <p>
+            The waterjet propulsion module monitors pump pressure, flow rate, jet velocity, temperature, and vibration.
+            It identifies issues like cavitation, intake blockage, pressure loss, and pump inefficiency, ensuring optimal propulsion performance.
+        </p>
+
+        <p>
+            The system provides real-time monitoring, intelligent alerts, and maintenance recommendations through an intuitive interface.
+            By enabling proactive, data-driven maintenance, it improves reliability, reduces downtime, and enhances overall system efficiency.
+        </p>
+    </div>
+</section>
+        <header class="page-header fade-in" style="margin-top: 3rem;">
+            <h2>Predictive Maintenance Dashboard</h2>
+            <p>Monitor real-time sensor data to detect faults and assess engine health instantly.</p>
+        </header>
+
+        <section id="dashboard" class="dashboard-grid fade-in">
+
+            <!-- LEFT PANEL: Inputs -->
+            <div class="glass-panel form-panel">
+                <div class="panel-header">
+                    <h3>Sensor Inputs</h3>
+                    <span class="status-badge">Live</span>
+                </div>
+                <div class="constant-info" id="engineConstantInfo">
+                    <span class="icon">⚙️</span>
+                    <span><strong>RPM:</strong> 1200 (Constant)</span>
+                </div>
+
+                <form id="predictionForm" class="prediction-form">
+
+                    <!-- ENGINE INPUTS -->
+                    <div id="engineInputs">
+
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Load (0 - 1)</label>
+                            <input type="number" name="Load" min="0" max="1" step="0.01" placeholder="e.g. 0.85"
+                                required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Torque (12k - 18.8k)</label>
+                            <input type="number" name="Torque" min="12000" max="18800" step="1" placeholder="e.g. 15000"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Temp (°C) (70 - 140)</label>
+                            <input type="number" name="Temperature" min="70" max="140" step="1" placeholder="e.g. 95"
+                                required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Torsional Vib. (0 - 3)</label>
+                            <input type="number" name="Torsional_Vibration" min="0" max="3" step="0.01"
+                                placeholder="e.g. 1.2" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Lateral Vib. (0 - 3)</label>
+                            <input type="number" name="Lateral_Vibration" min="0" max="3" step="0.01"
+                                placeholder="e.g. 0.5" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Fuel Rate (300 - 600)</label>
+                            <input type="number" name="Fuel_Rate" min="300" max="600" step="1" placeholder="e.g. 450"
+                                required>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- GEARBOX INPUTS -->
+                    <div id="gearboxInputs" class="hidden">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Input Shaft Speed (1200-1700)</label>
+                                <input type="number" name="Input_RPM" min="1200" max="1700" step="1" placeholder="e.g. 1500">
+                            </div>
+                            <div class="input-group">
+                                <label>Output Shaft Speed (300-700)</label>
+                                <input type="number" name="Output_RPM" min="300" max="700" step="1" placeholder="e.g. 500">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Torque (300-900)</label>
+                                <input type="number" name="TorqueGearbox" min="300" max="900" step="1" placeholder="e.g. 200">
+                            </div>
+                            <div class="input-group">
+                                <label>Temp (°C) (65-100)</label>
+                                <input type="number" name="TemperatureGearbox" min="65" max="100" step="1" placeholder="e.g. 80">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Vibration (0-5)</label>
+                                <input type="number" name="Vibration" min="0" max="5" step="0.01" placeholder="e.g. 1.5">
+                            </div>
+                            <div class="input-group">
+                                <label>Gear Ratio (2.5-3.5)</label>
+                                <input type="number" name="Gear_Ratio" min="2.5" max="3.5" step="0.1" placeholder="e.g. 3.0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WATERJET INPUTS -->
+                    <div id="waterjetInputs" class="hidden">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>RPM (600-2000)</label>
+                                <input type="number" name="Waterjet_RPM" min="600" max="2000" step="1" placeholder="e.g. 1500">
+                            </div>
+                            <div class="input-group">
+                                <label>Pressure (1-4)</label>
+                                <input type="number" name="Waterjet_Pressure" min="1" max="4" step="0.1" placeholder="e.g. 500">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Flow Rate (0.5-3)</label>
+                                <input type="number" name="Flow_Rate" min="0.5" max="3" step="0.1" placeholder="e.g. 100">
+                            </div>
+                            <div class="input-group">
+                                <label>Nozzle Diameter (200-500)</label>
+                                <input type="number" name="Nozzle_Diameter" min="200" max="500" step="1" placeholder="e.g. 10">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Jet Velocity (15-40)</label>
+                                <input type="number" name="Jet_Velocity" min="15" max="40" step="1" placeholder="e.g. 50">
+                            </div>
+                            <div class="input-group">
+                                <label>Vibration (0.5-10)</label>
+                                <input type="number" name="Waterjet_Vibration" min="0.5" max="10" step="0.1" placeholder="e.g. 1.5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="predictBtn">
+                        <span>Run Diagnostics</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- RIGHT PANEL: Results -->
+            <div class="glass-panel results-panel">
+                <div class="panel-header">
+                    <h3>Diagnostic Results</h3>
+                </div>
+
+                <div id="resultBox" class="results-content">
+                    <div class="health-score-container" id="healthScoreContainer">
+                        <h4 id="healthScoreTitle">Engine Health Score</h4>
+
+                        <!-- Circular Progress Meter -->
+                        <div class="circular-meter">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle-fill" id="meterFill" stroke-dasharray="0, 100" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                            <div class="meter-text">
+                                <span id="meterValue">--</span><span class="percent-sign">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alerts-container">
+                        <div class="alert-box" id="alertBoxUI">
+                            <div class="alert-icon-wrapper">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                                    </path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="alert-content">
+                                <span class="alert-label">Status Alert</span>
+                                <h2 id="alertResult">Pending...</h2>
+                            </div>
+                        </div>
+
+                        <div class="alert-box fault-box" id="faultBoxUI">
+                            <div class="alert-icon-wrapper fault">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="alert-content">
+                                <span class="alert-label">Fault Type Detected</span>
+                                <h3 id="faultResult">None</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#solutionBoxUI" class="btn-primary"
+                        style="text-decoration: none; width: 100%; margin-top: 0;">
+                        <span>View Recommended Action</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+        <div class="alert-box solution-box" id="solutionBoxUI">
+            <div class="alert-icon-wrapper">
+                🛠️
+            </div>
+            <div class="alert-content">
+                <span class="alert-label">Recommended Action</span>
+                <p id="solutionText">No recommendation yet</p>
+            </div>
+        </div>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AI Based Predictive Maintenance System. All Rights Reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

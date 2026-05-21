@@ -1,1 +1,2 @@
-# AI-Predictive-Maintenance-System-Using-Ship-Engine-Gearbox-Waterjet-Propeller
+# AI Predictive Maintenance System Using Ship Engine, Gear Box, WaterJet Propeller
+
